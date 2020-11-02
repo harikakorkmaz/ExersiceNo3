@@ -40,7 +40,7 @@ before_action :edit_book, only: [:edit, :update]
   def destroy
     @book = Book.find(params[:id])
     @book.destroy
-    redirect_to books_path
+    redirect_back(fallback_location: root_path)
   end
 
   private
