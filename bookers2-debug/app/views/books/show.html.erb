@@ -18,7 +18,7 @@
 					<td>
 						<%= link_to user_path(@book.user) do %>
 							<%= attachment_image_tag(@book.user, :profile_image, :fill, 100, 100, fallback: "no-image-mini.jpg") %><br>
-						<%= @book.user.name %>
+							<%= @book.user.name %>
 						<% end %>
 					</td>
 					<td><%= link_to @book.title, book_path(@book) %></td>
@@ -27,19 +27,18 @@
 							<li>
 							  <%= link_to book_favorites_path(@book), method: :delete do %>
 							    <i class="fa fa-heart" aria-hidden="true" style="color: red;"></i>
-							    <%= @book.favorites.count %> いいね
+							    <%= @book.favorites.count %>
 							  <% end %>
 							</li>
 							<% else %>
 							<li>
 							  <%= link_to book_favorites_path(@book), method: :post do %>
 							    <i class="fa fa-heart-o" aria-hidden="true"></i>
-							    <%= @book.favorites.count %> いいね
+							    <%= @book.favorites.count %>
 							  <% end %>
 							</li>
 						<% end %>
 					</td>
-					<td><i class="fa fa-comment"></i></td>
 					<td>コメント数:<%= @book.book_comments.count %></td>
 					<% if @book.user.id == current_user.id %>
 						<td><%= link_to "Edit", edit_book_path(@book), class: "btn-sm btn-success" %></td>
@@ -48,28 +47,16 @@
 				</tr>
 			</table>
 			<ul>
-			  <% @book.book_comments.each do |book_comment| %>
-			    <li class="comment">
-			      <div class="comment-body bb">
-			        <div class="comment-avatar">
-			          <div class="avatar">
-			            <%= image_tag('no_image.jpg', style: "width: 60px; height: 60px;") %>
-			          </div>
-			        </div>
-			        <div class="comment-text">
-			          <div class="comment-author clearfix">
-			            <a href="#" class="link-author"><%= book_comment.user.name %></a>
-			          </div>
-			          <div class="comment-entry"><%= book_comment.comment %></div>
-			          	<% if book_comment.user == current_user %>
-							<div>
-								<%= link_to "削除", book_book_comment_path(book_comment.book, book_comment), method: :delete, class: "btn btn-danger pull-right" %>
-							</div>
+				<li>
+					<% @book.book_comments.each do |book_comment| %>
+						<%= attachment_image_tag @book.user, :profile_image, format: 'jpg', fallback: "no_image.jpg.png", size: "40x40" %>
+						<%= book_comment.user.name %>
+						<%= book_comment.comment %>
+						<% if book_comment.user == current_user %>
+							<%= link_to "削除", book_book_comment_path(book_comment.book, book_comment), method: :delete, class: "btn btn-danger pull-right" %>
 						<% end %>
-			        </div>
-			      </div>
-			    </li>
-			  <% end %>
+				</li><br>
+					<% end %>
 			</ul>
 			<!-- <form class="mt-20"> -->
 			<%= form_with(model:[@book, @new_comment], local: true) do |f| %>
@@ -78,7 +65,7 @@
 			      <%= f.text_area :comment, class: "form-control",placeholder: "コメントをここに" %>
 			    </div>
 			  </div>
-			  <%= f.submit "送信する" %>
+			  <%= f.submit "送信する", class: "btn btn-lg btn-base-1 mt-20 pull-right" %>
 			<% end %>
 			<!-- </form> -->
 
